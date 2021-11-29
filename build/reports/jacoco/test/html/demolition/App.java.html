@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>App.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">final_demolition</a> &gt; <a href="index.source.html" class="el_package">demolition</a> &gt; <span class="el_source">App.java</span></div><h1>App.java</h1><pre class="source lang-java linenums">package demolition;
+import processing.core.PApplet;
+import processing.core.PFont;
+import java.awt.event.KeyEvent;
+
+public class App extends PApplet{
+
+    /**Dimension window of the app, width = 480*/
+    public static final int WIDTH = 480;
+    /**Dimension window of the app, height = 480*/
+    public static final int HEIGHT = 480;
+    /**Keypressed keycode left = 37*/
+    public static final int LEFT = 37;
+     /**Keypressed keycode right = 39*/
+    public static final int RIGHT = 39;
+     /**Keypressed keycode up = 38*/
+    public static final int UP = 38;
+     /**Keypressed keycode down = 40*/
+    public static final int DOWN = 40; 
+     /**Keypressed keycode space = 32*/ 
+    public static final int SPACE = 32; 
+     /**Frame rate 60 per seconds*/
+    public static final int FPS = 60;
+<span class="fc" id="L24">    public  String config=&quot;&quot;;</span>
+    
+    private Database db;
+
+    /**
+     * App constructor
+     */
+<span class="fc" id="L31">    public App(){</span>
+<span class="fc" id="L32">        this.db = new Database(); //intantiate database</span>
+        
+<span class="fc" id="L34">    }</span>
+    /**
+     * Build windows of the app according to the size given
+     */
+    public void settings() {
+<span class="fc" id="L39">        size(WIDTH, HEIGHT);</span>
+<span class="fc" id="L40">    }</span>
+    /**
+     * Setting up frame rate by 60 per secs and and load image block according to level
+     */
+    public void setup() {
+<span class="fc" id="L45">        frameRate(FPS);</span>
+<span class="fc" id="L46">        setConfig(&quot;config.json&quot;);</span>
+<span class="fc" id="L47">        this.db.configFile(this.config); </span>
+<span class="fc" id="L48">        this.db.updateBlock(this, Database.lvl);</span>
+<span class="fc" id="L49">    }</span>
+    /**
+     * Draw and update game config.
+     * Consist of 2 draw methods one for background and for blocks.
+     */
+    public void draw() {
+<span class="fc" id="L55">        background(239, 129 , 0);</span>
+<span class="fc" id="L56">        this.db.updateGame(this);</span>
+<span class="fc" id="L57">        this.db.drawBackground(this);</span>
+<span class="fc" id="L58">        this.db.drawBlock(this);</span>
+<span class="fc" id="L59">    }</span>
+    /**
+     * Declaring key code. Set it according to the direction of the bombguy
+     */
+    public void keyPressed(){
+<span class="fc bfc" id="L64" title="All 2 branches covered.">        if (this.keyCode ==SPACE){</span>
+<span class="fc" id="L65">            this.db.setDirection(SPACE);</span>
+
+<span class="fc bfc" id="L67" title="All 2 branches covered.">        }else if (this.keyCode == RIGHT){</span>
+<span class="fc" id="L68">            this.db.setDirection(RIGHT);</span>
+
+<span class="fc bfc" id="L70" title="All 2 branches covered.">        }else if (this.keyCode == DOWN){</span>
+<span class="fc" id="L71">            this.db.setDirection(DOWN);</span>
+        
+<span class="fc bfc" id="L73" title="All 2 branches covered.">        }else if (this.keyCode == UP){</span>
+<span class="fc" id="L74">            this.db.setDirection(UP);</span>
+        
+<span class="pc bpc" id="L76" title="1 of 2 branches missed.">        }else if (this.keyCode == LEFT){</span>
+<span class="fc" id="L77">            this.db.setDirection(LEFT);</span>
+        }
+<span class="fc" id="L79">    }</span>
+    /**
+     * set configuration file according to file path
+     * @param filepath the path to set config to
+     */
+    public void setConfig(String filepath){
+<span class="fc bfc" id="L85" title="All 2 branches covered.">        if(this.config == &quot;&quot;)</span>
+<span class="fc" id="L86">            this.config = filepath;</span>
+
+<span class="fc" id="L88">    }</span>
+    /*
+     * Main method to run the app
+     *  */  
+    public static void main(String[] args) {         
+<span class="nc" id="L93">        PApplet.main(&quot;demolition.App&quot;);         </span>
+<span class="nc" id="L94">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

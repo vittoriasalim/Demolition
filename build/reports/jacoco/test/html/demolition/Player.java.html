@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Player.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">final_demolition</a> &gt; <a href="index.source.html" class="el_package">demolition</a> &gt; <span class="el_source">Player.java</span></div><h1>Player.java</h1><pre class="source lang-java linenums">package demolition;
+
+import processing.core.PImage;
+import processing.core.PApplet;
+
+
+public abstract class Player extends Block{
+    /**CONSTANT frame to render every 0.2 seconds*/
+<span class="fc" id="L9">    public final int FRAME = 12;</span>
+    /**directions of player */
+    protected boolean right,left,up,down;
+    /**keep track of frame and index */
+    protected int frameCount,index;
+    /**collections of player sprites */
+    protected PImage[] sprites ;
+    /**is player moving x axis or y axis */
+    protected boolean isXAxis,isYAxis;
+    /**
+     * Player constructor, subclass of blocks
+     * @param x  x-coordinate of an object
+     * @param y  y-coordinate of an object
+     * @param sprite  sprite/image of an object
+     */
+    public Player(int x, int y, PImage sprite) {
+<span class="fc" id="L25">        super(x,y-15,sprite);</span>
+<span class="fc" id="L26">        this.right =this.left = this.up= this.down = false;</span>
+<span class="fc" id="L27">        this.frameCount = 0;</span>
+<span class="fc" id="L28">        this.sprites = new PImage[4];</span>
+<span class="fc" id="L29">        this.isXAxis=this.isYAxis=false;</span>
+<span class="fc" id="L30">        this.index =0;</span>
+<span class="fc" id="L31">    }</span>
+    /**
+     * Method to set sprites according to its direction
+     * @param frame frame direction out of 4 to replace 
+     * @param app   processing images
+     */
+    public abstract void setDirections(String frame,PApplet app);
+    /**
+     * Method to move characters by x-axis according to its logic
+     * @param y, y-coordinate of an object 
+     * @param x, x-coordinate of an object
+     * @param grid, 2d array of map objects
+     * @param index, index to check if character should turn left or right
+     */
+    public abstract void moveXaxis(int y, int x, Block[][] grid,int index);
+    /**
+     * Method to move characters by y-axis according to its logic
+     * @param y  y-coordinate of an object 
+     * @param x  x-coordinate of an object
+     * @param grid  2d array of map objects
+     * @param index index to check if character should turn up or down
+     */
+    public abstract void moveYaxis(int y, int x, Block[][] grid,int index);
+    /**
+     * Render character sprites ever 0.2 seconds according to its direction
+     * @param app  processing library images
+     */
+    public void renderDirection(PApplet app){
+<span class="fc bfc" id="L59" title="All 2 branches covered.">        if (this.frameCount &gt;= FRAME*4 ){</span>
+<span class="fc" id="L60">            this.frameCount=0;</span>
+<span class="fc" id="L61">            setDirections(&quot;1&quot;,app);</span>
+<span class="fc bfc" id="L62" title="All 2 branches covered.">        }else if (this.frameCount &gt;= FRAME*3 )</span>
+<span class="fc" id="L63">            setDirections(&quot;4&quot;,app);</span>
+<span class="fc bfc" id="L64" title="All 2 branches covered.">        else if (this.frameCount &gt;= FRAME*2 )</span>
+<span class="fc" id="L65">            setDirections(&quot;3&quot;,app);</span>
+<span class="fc bfc" id="L66" title="All 2 branches covered.">        else if (this.frameCount &gt;= FRAME )</span>
+<span class="fc" id="L67">            setDirections(&quot;2&quot;,app);</span>
+        else{
+<span class="fc" id="L69">            setDirections(&quot;1&quot;,app);</span>
+        }
+<span class="fc bfc" id="L71" title="All 2 branches covered.">        if(this.right == true)</span>
+<span class="fc" id="L72">            setSprite(this.sprites[0]);</span>
+<span class="pc bpc" id="L73" title="1 of 2 branches missed.">        else if (this.left == true)</span>
+<span class="nc" id="L74">            setSprite(this.sprites[1]);</span>
+<span class="pc bpc" id="L75" title="1 of 2 branches missed.">        else if (this.up == true)</span>
+<span class="nc" id="L76">            setSprite(this.sprites[2]);</span>
+        else
+<span class="fc" id="L78">            setSprite(this.sprites[3]);</span>
+<span class="fc" id="L79">    }</span>
+    /**
+     * Move player  and update its sprite
+     * @param y  y-coordinate of an object 
+     * @param x  x-coordinate of an object
+     * @param grid  2d array of map objects
+     */
+    public abstract void tick(int y, int x,Block[][] grid);
+  
+  
+
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

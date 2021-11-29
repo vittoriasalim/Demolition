@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>BombGuy.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">final_demolition</a> &gt; <a href="index.source.html" class="el_package">demolition</a> &gt; <span class="el_source">BombGuy.java</span></div><h1>BombGuy.java</h1><pre class="source lang-java linenums">package demolition;
+import processing.core.PImage;
+import processing.core.PApplet;
+import java.util.ArrayList;
+
+public class BombGuy extends Player{
+    /**
+     * Declaring attributes of the class
+     */
+    private int xVal , yVal;
+    /**
+     * subclass of player, blocks
+     * @param x      x-coordinate of an object
+     * @param y      y-coordinate of an object
+     * @param sprite sprite/image of an object
+     */
+
+    public BombGuy(int x, int y, PImage sprite) {
+<span class="fc" id="L19">        super(x,y,sprite);</span>
+<span class="fc" id="L20">        this.xVal = this.yVal = 0;    </span>
+<span class="fc" id="L21">    }</span>
+
+    @Override
+    public void moveXaxis(int y, int x,Block[][] grid, int index){
+<span class="fc bfc" id="L25" title="All 2 branches covered.">        if(grid[y][x+index] instanceof Goal){</span>
+<span class="fc" id="L26">            Database.lvl +=1; //move to next level when reaches the goal</span>
+<span class="fc" id="L27">            Database.win = true;</span>
+        }
+<span class="fc bfc" id="L29" title="All 4 branches covered.">        if (grid[y][x+index]==null || grid[y][x+index] instanceof Enemy){</span>
+<span class="fc bfc" id="L30" title="All 2 branches covered.">            if (index ==-1){ //move to the next tile when key is pressed</span>
+<span class="fc" id="L31">                this.left = true;</span>
+<span class="fc" id="L32">                this.right = this.down = this.up = false;</span>
+<span class="pc bpc" id="L33" title="1 of 2 branches missed.">            }else if (index==1){ //set the direction</span>
+<span class="fc" id="L34">                this.right = true;</span>
+<span class="fc" id="L35">                this.down = this.left = this.up = false;</span>
+            }
+<span class="fc" id="L37">            this.index= index;</span>
+<span class="fc" id="L38">            this.xVal=32*index;</span>
+<span class="fc" id="L39">            this.isXAxis=true;</span>
+   
+        }else{
+<span class="fc" id="L42">            this.xVal = 0;</span>
+        }     
+  
+<span class="fc" id="L45">    }</span>
+    /**
+     * Load bomb in bomb guy position at the background
+     * @param y, y-coordinate of an object 
+     * @param x, x-coordinate of an object
+     * @param background, list of map background
+     * @param app, processing image
+     */
+    public void loadBomb(PApplet app,int y, int x, ArrayList&lt;Block&gt; background){
+<span class="fc" id="L54">        background.add(new Bomb(x*32,y*32,app.loadImage(&quot;src/main/resources/bomb/bomb.png&quot;)));</span>
+<span class="fc" id="L55">    }</span>
+    
+    @Override
+    public void moveYaxis(int y, int x, Block[][] grid,int index){
+<span class="pc bpc" id="L59" title="1 of 2 branches missed.">        if(grid[y+index][x] instanceof Goal){</span>
+<span class="nc" id="L60">            Database.lvl+=1; //move next level</span>
+<span class="nc" id="L61">            Database.win = true;</span>
+        }
+
+<span class="pc bpc" id="L64" title="1 of 4 branches missed.">        if (grid[y+index][x]==null || grid[y+index][x] instanceof Enemy){</span>
+<span class="fc" id="L65">            this.yVal=32*index;</span>
+<span class="fc bfc" id="L66" title="All 2 branches covered.">            if (index ==1){ //set direction</span>
+<span class="fc" id="L67">                this.down = true;</span>
+<span class="fc" id="L68">                this.right = this.left = this.up = false;</span>
+<span class="pc bpc" id="L69" title="1 of 2 branches missed.">            }else if (index == -1){</span>
+<span class="fc" id="L70">                this.up = true;</span>
+<span class="fc" id="L71">                this.right = this.left = this.down = false;</span>
+            }
+<span class="fc" id="L73">            this.index= index;</span>
+<span class="fc" id="L74">            this.isYAxis=true;</span>
+        }else{
+<span class="nc" id="L76">            this.yVal =0;</span>
+        }
+<span class="fc" id="L78">    }</span>
+    
+    @Override
+    public void tick(int y , int x , Block[][] grid) {
+<span class="fc" id="L82">        this.frameCount++;</span>
+<span class="fc bfc" id="L83" title="All 2 branches covered.">        if (this.isXAxis){</span>
+<span class="fc" id="L84">            this.x +=this.xVal;  //move bombguy to desired position</span>
+<span class="fc bfc" id="L85" title="All 2 branches covered.">            if(grid[y][x+this.index] instanceof Enemy){</span>
+<span class="fc" id="L86">                Map.reset = true; //reset current level when encountered enemy</span>
+<span class="fc" id="L87">                grid[y][x+this.index] = this;</span>
+            }else{
+<span class="fc" id="L89">                grid[y][x+this.index] = this;</span>
+<span class="fc" id="L90">                grid[y][x]=null;</span>
+            }         
+<span class="fc bfc" id="L92" title="All 2 branches covered.">        }else if (this.isYAxis){</span>
+<span class="fc" id="L93">            this.y += this.yVal; </span>
+<span class="fc bfc" id="L94" title="All 2 branches covered.">            if(grid[y+this.index][x] instanceof Enemy){</span>
+<span class="fc" id="L95">                Map.reset = true; //reset current level when encountered enemy</span>
+<span class="fc" id="L96">                grid[y+this.index][x] = this;</span>
+            } else{
+<span class="fc" id="L98">                grid[y+this.index][x] = grid[y][x];</span>
+<span class="fc" id="L99">                grid[y][x]=null;</span>
+
+            }       
+        }  
+<span class="fc" id="L103">        this.isXAxis = this.isYAxis=false;</span>
+<span class="fc" id="L104">    }</span>
+    @Override
+    public void setDirections(String frame, PApplet app){
+<span class="fc" id="L107">        String [] url = {&quot;src/main/resources/player/player_right1.png&quot;,</span>
+        &quot;src/main/resources/player/player_left1.png&quot;,
+        &quot;src/main/resources/player/player_up1.png&quot;, //change sprites according to direction
+        &quot;src/main/resources/player/player1.png&quot;};
+<span class="fc bfc" id="L111" title="All 2 branches covered.">        for(int i =0 ; i &lt; 4;i++){</span>
+<span class="fc" id="L112">            url[i] = url[i].replace(&quot;1&quot;, frame);</span>
+<span class="fc" id="L113">            this.sprites[i] = app.loadImage(url[i]); </span>
+        }
+        
+       
+<span class="fc" id="L117">    }</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="demolition.DatabaseTest" tests="7" skipped="0" failures="0" errors="0" timestamp="2021-11-05T11:11:14" hostname="DESKTOP-4MELK5E" time="0.656">
+  <properties/>
+  <testcase name="setBGuyDirectionDown()" classname="demolition.DatabaseTest" time="0.072"/>
+  <testcase name="setBGuyDirectionLeft()" classname="demolition.DatabaseTest" time="0.076"/>
+  <testcase name="setBGuyBomb()" classname="demolition.DatabaseTest" time="0.072"/>
+  <testcase name="setBGuyDirectionUp()" classname="demolition.DatabaseTest" time="0.166"/>
+  <testcase name="setDirectionRight()" classname="demolition.DatabaseTest" time="0.092"/>
+  <testcase name="setLoadBomb()" classname="demolition.DatabaseTest" time="0.046"/>
+  <testcase name="drawAndLoadBlocks()" classname="demolition.DatabaseTest" time="0.126"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

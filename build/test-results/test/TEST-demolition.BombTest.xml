@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="demolition.BombTest" tests="7" skipped="0" failures="0" errors="0" timestamp="2021-11-05T11:11:12" hostname="DESKTOP-4MELK5E" time="1.739">
+  <properties/>
+  <testcase name="destroyBrokenVertical()" classname="demolition.BombTest" time="0.282"/>
+  <testcase name="testExplodes()" classname="demolition.BombTest" time="0.195"/>
+  <testcase name="preserveSolid()" classname="demolition.BombTest" time="0.305"/>
+  <testcase name="resetExplosion()" classname="demolition.BombTest" time="0.382"/>
+  <testcase name="destroyBrokenHorizontal()" classname="demolition.BombTest" time="0.246"/>
+  <testcase name="destroyBombGuyHorizontal()" classname="demolition.BombTest" time="0.273"/>
+  <testcase name="notExplode()" classname="demolition.BombTest" time="0.051"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

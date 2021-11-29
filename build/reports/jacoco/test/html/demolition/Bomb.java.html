@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Bomb.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">final_demolition</a> &gt; <a href="index.source.html" class="el_package">demolition</a> &gt; <span class="el_source">Bomb.java</span></div><h1>Bomb.java</h1><pre class="source lang-java linenums">package demolition;
+import processing.core.PImage;
+import processing.core.PApplet;
+import java.util.ArrayList;
+
+public class Bomb extends Block{
+    /*to count number the total of sprites based on the frame counter*/
+    private int getFrame;
+    /**indicate the time to explode*/
+    private int stopExplode;
+    /*Indicate number of frames to render each sprites*/
+    public static final int FRAME_BOMB =15;
+    /**Collection of sprites to render */
+    protected PImage[] spriteCollection ;
+    /**url for left sprites */
+<span class="fc" id="L16">    private String[] urlLeft = {       </span>
+        &quot;src/main/resources/explosion/horizontal.png&quot;,
+        &quot;src/main/resources/explosion/end_left.png&quot;
+    };
+    /**url for right sprites */
+<span class="fc" id="L21">    private String[] urlRight ={       </span>
+        &quot;src/main/resources/explosion/horizontal.png&quot;,
+        &quot;src/main/resources/explosion/end_right.png&quot;
+    };
+    /**url for top sprites */
+<span class="fc" id="L26">    private String[] urlTop ={       </span>
+        &quot;src/main/resources/explosion/vertical.png&quot;,
+        &quot;src/main/resources/explosion/end_top.png&quot;
+        
+    };
+    /**url for bottom sprites */
+<span class="fc" id="L32">    private String[] urlBot = {</span>
+        &quot;src/main/resources/explosion/vertical.png&quot;,
+        &quot;src/main/resources/explosion/end_bottom.png&quot;};
+    /**
+     * Subclass of blocks
+     * @param x  x-coordinate of an object
+     * @param y  y-coordinate of an object
+     * @param sprite sprite/image of an object
+     */
+    public Bomb(int x, int y, PImage sprite) {
+<span class="fc" id="L42">        super(x,y,sprite);</span>
+<span class="fc" id="L43">        this.spriteCollection = new PImage [8];</span>
+<span class="fc" id="L44">    }</span>
+    /**
+     * check if bomb is time to explode , then load image
+     * @param app processing library
+     * @param grid map of objects
+     * @param background objects of map in the background 
+     * @return true : if it is time to explode and no when it is not
+     */
+    public boolean explode(PApplet app,Block[][] grid,ArrayList&lt;Block&gt; background){
+
+<span class="fc bfc" id="L54" title="All 2 branches covered.">        if(this.getFrame == 8){//0.25 seconds for 8 sprite</span>
+<span class="fc" id="L55">            int x = this.x/32;</span>
+<span class="fc" id="L56">            int y = (this.y-64)/32;</span>
+<span class="pc bpc" id="L57" title="1 of 2 branches missed.">            if(grid[y][x] instanceof BombGuy){</span>
+<span class="nc" id="L58">                Map.reset = true;</span>
+            }
+<span class="fc" id="L60">            grid[y][x] = new Bomb(this.x,this.y-64,app.loadImage(&quot;src/main/resources/explosion/centre.png&quot;));</span>
+<span class="fc" id="L61">            loadVertical(app,x,y,grid,-1);</span>
+<span class="fc" id="L62">            loadVertical(app,x,y,grid,+1);</span>
+<span class="fc" id="L63">            loadHorizontal(app,x,y,grid,-1);</span>
+<span class="fc" id="L64">            loadHorizontal(app,x,y,grid,1);</span>
+
+<span class="fc" id="L66">            return true;</span>
+        }else{
+<span class="fc" id="L68">            return false;</span>
+        }
+    }
+    /**
+     * Increment time frame to set time when it is about to explode or remain
+     * @param x, x-coordinate of object
+     * @param y, y -coordinate of object
+     * @param grid, 2d array of map to modify object
+     */
+    public void tick(int x, int y,Block[][] grid){
+
+<span class="fc" id="L79">        this.stopExplode++;</span>
+<span class="fc bfc" id="L80" title="All 2 branches covered.">        if(this.stopExplode&gt;=30){</span>
+<span class="fc" id="L81">            grid[y][x]=null;</span>
+            //this.stopExplode =0;
+     
+        }        
+<span class="fc" id="L85">    }</span>
+    /**
+     * render sprites of bomb remain 2 seconds for 8 sprites before it explodes
+     * @param app processing image 
+     */
+    public void render(PApplet app){
+<span class="fc" id="L91">        setSprites(app);</span>
+<span class="pc bpc" id="L92" title="1 of 2 branches missed.">        if(this.getFrame == 8 ){</span>
+<span class="nc" id="L93">            this.getFrame = 0;</span>
+        }
+<span class="fc" id="L95">        setSprite(this.spriteCollection[getFrame]);</span>
+<span class="fc" id="L96">        this.getFrame++;</span>
+<span class="fc" id="L97">    }</span>
+    /**
+     * Import sprites to the collections according to its time frame
+     * @param app, processing library
+     */
+    private void setSprites(PApplet app){
+<span class="fc" id="L103">        String url = &quot;src/main/resources/bomb/bomb.png&quot;;</span>
+<span class="fc bfc" id="L104" title="All 2 branches covered.">        for(int i =0 ; i &lt; 8 ; i++){</span>
+<span class="fc" id="L105">            String newUrl = url.replace(&quot;bomb.png&quot;,&quot;bomb&quot;+ (i+1)+&quot;.png&quot;);</span>
+<span class="fc" id="L106">            this.spriteCollection[i] = app.loadImage(newUrl); </span>
+        }
+       
+<span class="fc" id="L109">    }</span>
+     /**
+     * Load horizonatal sprites , eliminate bombguy and enemy
+     * @param app processing image library 
+     * @param x x-coordinate of object
+     * @param y y -coordinate of object
+     * @param grid 2d array of map to modify object
+     * @param index index decalring if it goes left or right
+     */
+    private void loadHorizontal(PApplet app,int x , int y,Block[][] grid,int index){
+<span class="fc" id="L119">        int pos = 0;</span>
+<span class="fc" id="L120">        String [] url =null;</span>
+<span class="fc bfc" id="L121" title="All 2 branches covered.">        if(index == -1)</span>
+<span class="fc" id="L122">            url = urlLeft;</span>
+        else
+<span class="fc" id="L124">            url = urlRight;</span>
+<span class="fc bfc" id="L125" title="All 2 branches covered.">        for(int i =0 ; i &lt; 2 ;i ++){</span>
+<span class="fc" id="L126">            pos+=index;</span>
+<span class="fc bfc" id="L127" title="All 6 branches covered.">            if(grid[y][x+pos] ==null|| grid[y][x+pos] instanceof Player || grid[y][x+pos] instanceof Broken){</span>
+<span class="fc" id="L128">                int xIndex = pos*32;</span>
+<span class="fc bfc" id="L129" title="All 2 branches covered.">                if(grid[y][x+pos] instanceof Broken){</span>
+<span class="fc" id="L130">                    grid[y][x+pos] = new Bomb(this.x+xIndex,this.y-64,app.loadImage(url[i]));</span>
+<span class="fc" id="L131">                    break;</span>
+                }
+<span class="fc bfc" id="L133" title="All 2 branches covered.">                if(grid[y][x+pos] instanceof BombGuy){</span>
+<span class="fc" id="L134">                    Map.reset =true;</span>
+                }
+<span class="fc" id="L136">                grid[y][x+pos] = new Bomb(this.x+xIndex,this.y-64,app.loadImage(url[i]));</span>
+<span class="pc bpc" id="L137" title="1 of 2 branches missed.">            }else if(grid[y][x+pos]!=null){</span>
+<span class="fc" id="L138">                break;</span>
+            }
+        }
+
+<span class="fc" id="L142">    }</span>
+    /**
+         * Load vertical sprites , eliminate bombguy and enemy
+         * @param app processing image library 
+         * @param x x-coordinate of object
+         * @param y y -coordinate of object
+         * @param grid 2d array of map to modify object
+         * @param index index decalring if it goes up or down
+     */
+    private void loadVertical(PApplet app,int x , int y,Block[][] grid,int index){
+<span class="fc" id="L152">        int pos = 0;</span>
+<span class="fc" id="L153">        String [] url =null;</span>
+<span class="fc bfc" id="L154" title="All 2 branches covered.">        if(index == -1)</span>
+<span class="fc" id="L155">            url = urlTop;</span>
+        else
+<span class="fc" id="L157">            url = urlBot;</span>
+<span class="fc bfc" id="L158" title="All 2 branches covered.">        for(int i =0 ; i &lt; 2 ;i ++){</span>
+<span class="fc" id="L159">            pos+=index;</span>
+           
+<span class="pc bpc" id="L161" title="2 of 6 branches missed.">            if(grid[y+pos][x] ==null|| grid[y+pos][x] instanceof Player || grid[y+pos][x] instanceof Broken ){</span>
+<span class="fc" id="L162">                int yIndex = pos*32;</span>
+<span class="fc bfc" id="L163" title="All 2 branches covered.">                if(grid[y+pos][x] instanceof Broken){</span>
+<span class="fc" id="L164">                    grid[y+pos][x] = new Bomb(this.x,this.y-64+yIndex,app.loadImage(url[i]));</span>
+<span class="fc" id="L165">                    break;</span>
+                }
+<span class="pc bpc" id="L167" title="1 of 2 branches missed.">                if(grid[y+pos][x] instanceof BombGuy){</span>
+<span class="nc" id="L168">                    Map.reset =true;</span>
+                }
+<span class="fc" id="L170">                grid[y+pos][x] = new Bomb(this.x,this.y-64+yIndex,app.loadImage(url[i]));</span>
+<span class="pc bnc" id="L171" title="All 2 branches missed.">            }else if(grid[y+pos][x]!=null){</span>
+<span class="nc" id="L172">                break;</span>
+            }
+        }
+
+<span class="fc" id="L176">    }</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

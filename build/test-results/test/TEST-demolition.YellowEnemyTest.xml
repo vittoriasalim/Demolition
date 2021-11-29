@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="demolition.YellowEnemyTest" tests="15" skipped="0" failures="0" errors="0" timestamp="2021-11-05T11:11:18" hostname="DESKTOP-4MELK5E" time="1.795">
+  <properties/>
+  <testcase name="moveYellowRightXTest()" classname="demolition.YellowEnemyTest" time="0.05"/>
+  <testcase name="moveYellowBombGuyXTest()" classname="demolition.YellowEnemyTest" time="0.078"/>
+  <testcase name="moveYellowBombGuyYTest()" classname="demolition.YellowEnemyTest" time="0.086"/>
+  <testcase name="goStraightTest()" classname="demolition.YellowEnemyTest" time="0.085"/>
+  <testcase name="yelloEnemyYTest()" classname="demolition.YellowEnemyTest" time="0.1"/>
+  <testcase name="moveYellowSolidUpTest()" classname="demolition.YellowEnemyTest" time="0.123"/>
+  <testcase name="moveYellowDownYTest()" classname="demolition.YellowEnemyTest" time="0.197"/>
+  <testcase name="moveYellowSolidRightTest()" classname="demolition.YellowEnemyTest" time="0.195"/>
+  <testcase name="moveYellowLeftXTest()" classname="demolition.YellowEnemyTest" time="0.104"/>
+  <testcase name="moveYellowSolidDownTest()" classname="demolition.YellowEnemyTest" time="0.131"/>
+  <testcase name="moveYellowSolidLeftTest()" classname="demolition.YellowEnemyTest" time="0.172"/>
+  <testcase name="yellowEnemyXTest()" classname="demolition.YellowEnemyTest" time="0.093"/>
+  <testcase name="moveYellowUpYTest()" classname="demolition.YellowEnemyTest" time="0.102"/>
+  <testcase name="goClockwiseXTest()" classname="demolition.YellowEnemyTest" time="0.127"/>
+  <testcase name="goClockwiseYTest()" classname="demolition.YellowEnemyTest" time="0.14"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[The file "src/main/resources/player/playerl.png" is missing or inaccessible, make sure the URL is valid or that the file has been added to your sketch and is readable.
+The file "src/main/resources/player/playerl.png" is missing or inaccessible, make sure the URL is valid or that the file has been added to your sketch and is readable.
+The file "src/main/resources/red_enemy/red_downl.png" is missing or inaccessible, make sure the URL is valid or that the file has been added to your sketch and is readable.
+The file "src/main/resources/red_enemy/red_downl.png" is missing or inaccessible, make sure the URL is valid or that the file has been added to your sketch and is readable.
+]]></system-err>
+</testsuite>

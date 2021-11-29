@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="demolition.MapTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2021-11-05T11:11:15" hostname="DESKTOP-4MELK5E" time="0.99">
+  <properties/>
+  <testcase name="testLoadMapGetter()" classname="demolition.MapTest" time="0.99"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

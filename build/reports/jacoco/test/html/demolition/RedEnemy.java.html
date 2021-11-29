@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>RedEnemy.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">final_demolition</a> &gt; <a href="index.source.html" class="el_package">demolition</a> &gt; <span class="el_source">RedEnemy.java</span></div><h1>RedEnemy.java</h1><pre class="source lang-java linenums">package demolition;
+
+import processing.core.PImage;
+import processing.core.PApplet;
+
+public class RedEnemy extends Enemy{
+    /**
+     * Subclass of player and enemy  and blocks
+     * @param x  x-coordinate of an object
+     * @param y  y-coordinate of an object
+     * @param sprite sprite/image of an object
+     */
+    public RedEnemy(int x, int y, PImage sprite) {
+<span class="fc" id="L14">        super(x,y,sprite);</span>
+<span class="fc" id="L15">        this.count= this.move  =0;</span>
+<span class="fc" id="L16">        this.isXAxis = this.isYAxis = false;</span>
+<span class="fc" id="L17">    }</span>
+    @Override
+    public void moveXaxis(int y, int x,Block[][] grid, int index){
+<span class="fc bfc" id="L20" title="All 4 branches covered.">        if (grid[y][x+index]==null || grid[y][x+index] instanceof Player){</span>
+<span class="fc" id="L21">            moveX(x,y,index);   //move when meet other player</span>
+        }
+<span class="pc bpc" id="L23" title="1 of 2 branches missed.">        else if (grid[y][x+index]!=null){</span>
+<span class="fc" id="L24">            randomX(grid,x,y); //choose red enemy path</span>
+<span class="fc" id="L25">            this.isXAxis= false;</span>
+<span class="fc" id="L26">            this.move =0;</span>
+        }
+        else{
+<span class="nc" id="L29">            this.isXAxis= false; </span>
+<span class="nc" id="L30">            this.move = 0; </span>
+        }
+               
+    
+<span class="fc" id="L34">    }</span>
+    @Override
+    public void moveYaxis(int y, int x,Block[][] grid, int index){
+     
+<span class="fc bfc" id="L38" title="All 4 branches covered.">        if (grid[y+index][x]==null || grid[y+index][x] instanceof Player){</span>
+<span class="fc" id="L39">            moveY(x,y,index); //move enemy when empty of meet other player</span>
+        }
+<span class="pc bpc" id="L41" title="1 of 2 branches missed.">        else if (grid[y+index][x]!=null){</span>
+<span class="fc" id="L42">            randomY(grid,x,y); //when encountered blocks choose other path</span>
+<span class="fc" id="L43">            this.isYAxis=false;</span>
+<span class="fc" id="L44">            this.move = 0;</span>
+        }
+        else{
+<span class="nc" id="L47">            this.isYAxis= false;</span>
+<span class="nc" id="L48">            this.move = 0;    </span>
+        }
+<span class="fc" id="L50">    }</span>
+    /**
+     * Deciding the random x-axis path of red enemy 
+     * @param grid  2d array of the may
+     * @param x   x-coordinate of the object to modify
+     * @param y   y-coordinate of the object to modify
+     */
+    private void randomX(Block[][] grid, int x, int y){
+<span class="fc bfc" id="L58" title="All 2 branches covered.">        if (grid[y+1][x] == null){</span>
+<span class="fc" id="L59">            this.down = true;</span>
+<span class="fc" id="L60">            this.up = this.left = this.right = false;</span>
+<span class="fc bfc" id="L61" title="All 2 branches covered.">        }else if (grid[y-1][x] == null){</span>
+<span class="fc" id="L62">            this.up = true;</span>
+<span class="fc" id="L63">            this.down = this.left =this.right = false;</span>
+<span class="fc bfc" id="L64" title="All 2 branches covered.">        }else if(grid[y][x+1] ==null){</span>
+<span class="fc" id="L65">            this.right = true;</span>
+<span class="fc" id="L66">            this.left =this.up =this.down =false;</span>
+<span class="pc bpc" id="L67" title="1 of 2 branches missed.">        }else if( grid[y][x-1] == null){</span>
+<span class="fc" id="L68">            this.left = true;</span>
+<span class="fc" id="L69">            this.right = this.up=this.down = false;</span>
+        }
+<span class="fc" id="L71">    }</span>
+    /**
+     * Deciding the random y-axis path of red enemy 
+     * @param grid 2d array of the may
+     * @param x    x-coordinate of the object to modify
+     * @param y    y-coordinate of the object to modify
+     */
+
+    private void randomY(Block [][] grid, int x, int y){
+<span class="fc bfc" id="L80" title="All 2 branches covered.">        if(grid[y][x+1] ==null){</span>
+<span class="fc" id="L81">            this.right = true;</span>
+<span class="fc" id="L82">            this.left =this.up =this.down =false;</span>
+<span class="pc bpc" id="L83" title="1 of 2 branches missed.">        }else if( grid[y][x-1] == null){</span>
+<span class="fc" id="L84">            this.left = true;</span>
+<span class="fc" id="L85">            this.right = this.up=this.down = false;</span>
+<span class="nc bnc" id="L86" title="All 2 branches missed.">        }else if (grid[y+1][x] == null){</span>
+<span class="nc" id="L87">            this.down = true;</span>
+<span class="nc" id="L88">            this.up = this.left = this.right = false;</span>
+<span class="nc bnc" id="L89" title="All 2 branches missed.">        }else if (grid[y-1][x] == null){</span>
+<span class="nc" id="L90">            this.up = true;</span>
+<span class="nc" id="L91">            this.down = this.left =this.right = false;</span>
+        }
+<span class="fc" id="L93">    }</span>
+    @Override
+    // load enemy sprites
+    public void setDirections(String frame, PApplet app){
+<span class="fc" id="L97">        String [] url = {&quot;src/main/resources/red_enemy/red_right1.png&quot;,</span>
+        &quot;src/main/resources/red_enemy/red_left1.png&quot;,
+        &quot;src/main/resources/red_enemy/red_up1.png&quot;,
+        &quot;src/main/resources/red_enemy/red_down1.png&quot;};
+
+<span class="fc bfc" id="L102" title="All 2 branches covered.">        for(int i =0 ; i &lt; 4;i++){</span>
+<span class="fc" id="L103">            url[i] = url[i].replace(&quot;1&quot;, frame);</span>
+<span class="fc" id="L104">            this.sprites[i] = app.loadImage(url[i]); </span>
+        }
+       
+<span class="fc" id="L107">    }</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

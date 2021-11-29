@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Enemy.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">final_demolition</a> &gt; <a href="index.source.html" class="el_package">demolition</a> &gt; <span class="el_source">Enemy.java</span></div><h1>Enemy.java</h1><pre class="source lang-java linenums">package demolition;
+
+import processing.core.PImage;
+import processing.core.PApplet;
+import java.util.ArrayList;
+
+
+public abstract class Enemy extends Player{
+    /**Number of step to increment,
+     * while count is to count number of frame**/
+    protected int move,count;
+    /**
+     * Subclass of player
+     * @param x  x-coordinate of an object
+     * @param y  y-coordinate of an object
+     * @param sprite sprite/image of an object
+     */
+    public Enemy(int x, int y, PImage sprite) {
+<span class="fc" id="L19">        super(x,y,sprite);</span>
+<span class="fc" id="L20">    }</span>
+    /**
+     * Set directions of enemy automove according to its index 
+     * if index ==-1 , then left
+     * if index == 1 , then right
+     * @param x , x-coordinate of an object
+     * @param y, y-coordinate of an object
+     * @param index, directions
+     */
+    public void moveX(int x, int y,int index){
+<span class="fc" id="L30">        this.move = 32*index;</span>
+<span class="fc bfc" id="L31" title="All 2 branches covered.">        if(index ==1){</span>
+<span class="fc" id="L32">            this.right = true;</span>
+<span class="fc" id="L33">            this.left = this.up = this.down = false;</span>
+<span class="fc bfc" id="L34" title="All 2 branches covered.">        }else if (index ==-1){</span>
+<span class="fc" id="L35">            this.left = true;</span>
+<span class="fc" id="L36">            this.right = this.up = this.down = false;</span>
+        }
+<span class="fc" id="L38">        this.isXAxis = true;</span>
+<span class="fc" id="L39">        this.index = index;</span>
+<span class="fc" id="L40">    }</span>
+    /**
+     * Set directions of enemy automove according to the index 
+     * if index ==-1 , then up
+     * if index == 1 , then down
+     * @param x  x-coordinate of an object
+     * @param y  y-coordinate of an object
+     * @param index  directions
+     */
+    public void moveY(int x, int y,int index){
+<span class="fc" id="L50">        this.move = 32*index;</span>
+<span class="fc bfc" id="L51" title="All 2 branches covered.">        if(index ==1){</span>
+<span class="fc" id="L52">            this.down = true;</span>
+<span class="fc" id="L53">            this.left=this.right=this.up=false;</span>
+<span class="fc bfc" id="L54" title="All 2 branches covered.">        }else if (index == -1){</span>
+
+<span class="fc" id="L56">            this.up = true;</span>
+<span class="fc" id="L57">            this.right=this.down=this.left =false;</span>
+        }
+<span class="fc" id="L59">        this.isYAxis=true;</span>
+<span class="fc" id="L60">        this.index = index;</span>
+<span class="fc" id="L61">    }</span>
+    /**
+     * Redirect enemy if it collides to the appropriate directions
+     * @param x  x-coordinate of an object
+     * @param y  y-coordinate of an object
+     * @param grid  map of 2d array
+     */
+    public void collision(int y , int x, Block[][] grid){
+<span class="fc bfc" id="L69" title="All 2 branches covered.">        if(this.right)</span>
+<span class="fc" id="L70">            moveXaxis(y,x,grid,1);</span>
+<span class="fc bfc" id="L71" title="All 2 branches covered.">        else if (this.left)</span>
+<span class="fc" id="L72">            moveXaxis(y,x,grid,-1);</span>
+<span class="fc bfc" id="L73" title="All 2 branches covered.">        else if(this.up)</span>
+<span class="fc" id="L74">            moveYaxis(y,x,grid,-1);</span>
+<span class="fc bfc" id="L75" title="All 2 branches covered.">        else if (this.down)</span>
+<span class="fc" id="L76">            moveYaxis(y,x,grid,1);</span>
+<span class="pc bpc" id="L77" title="4 of 8 branches missed.">        else if (!this.down &amp;&amp; !this.left &amp;&amp; !this.right &amp;&amp; !this.up)//straight line</span>
+<span class="fc" id="L78">            moveYaxis(y,x,grid,1);  </span>
+<span class="fc" id="L79">    }</span>
+    /**
+     * Update sprite and modify grid in x-axis
+     * Delete previous position and update to new grid 
+     * Swap when enemy collides
+     * Reset game if met bombguy or bomb, etc
+     * if index==-1 , then left
+     * if index == 1 , then right
+     * @param x  x-coordinate of an object
+     * @param y  y-coordinate of an object
+     * @param move amount to move 
+     * @param index  directions
+     * @param grid  map of 2d array
+     */
+    public void tickXAxis(int x, int y , int move,int index,Block[][] grid){
+<span class="fc" id="L94">        this.x+=move;</span>
+<span class="fc bfc" id="L95" title="All 2 branches covered.">        if(grid[y][x+index] instanceof BombGuy){</span>
+<span class="fc" id="L96">            grid[y][x+index]=this;  </span>
+<span class="fc" id="L97">            Map.reset = true;</span>
+        }   
+<span class="fc bfc" id="L99" title="All 2 branches covered.">        else if(!(grid[y][x+index] instanceof Enemy)){</span>
+<span class="fc" id="L100">            grid[y][x+index]= this;</span>
+<span class="fc" id="L101">            grid[y][x]=null;</span>
+        }
+<span class="pc bpc" id="L103" title="1 of 2 branches missed.">        else if (grid[y][x+index] instanceof Enemy){</span>
+<span class="fc" id="L104">            int yelX = x*32;</span>
+<span class="pc bpc" id="L105" title="1 of 2 branches missed.">            if (grid[y][x+index].getX() == yelX ){</span>
+<span class="fc" id="L106">                Enemy enemy = (Enemy)grid[y][x+index];</span>
+<span class="fc" id="L107">                grid[y][x+index]=this;</span>
+<span class="fc" id="L108">                grid[y][x] = enemy;</span>
+            }
+            
+        }
+<span class="fc" id="L112">    }</span>
+    /**
+     * Update sprite and modify grid in y-axis
+     * Delete previous position and update to new grid 
+     * Swap when enemy collides
+     * Reset game if met bombguy or bomb, etc
+     * if index==-1 , then up
+     * if index == 1 , then down
+     * @param x  x-coordinate of an object
+     * @param y  y-coordinate of an object
+     * @param move set amount to move
+     * @param index directions
+     * @param grid   map of 2d array
+     */
+    public void tickYAxis(int x, int y , int move, int index ,Block[][] grid){
+<span class="fc" id="L127">        this.y +=move;</span>
+<span class="fc bfc" id="L128" title="All 2 branches covered.">        if(grid[y+index][x] instanceof BombGuy){</span>
+<span class="fc" id="L129">            grid[y+index][x]= this;</span>
+<span class="fc" id="L130">            Map.reset = true;</span>
+        }   
+<span class="fc bfc" id="L132" title="All 2 branches covered.">        else if (!(grid[y+index][x] instanceof Enemy)){</span>
+<span class="fc" id="L133">            grid[y+index][x]= this;</span>
+<span class="fc" id="L134">            grid[y][x]=null;</span>
+        }
+<span class="pc bpc" id="L136" title="1 of 2 branches missed.">        else if (grid[y+index][x] instanceof Enemy){</span>
+<span class="fc" id="L137">            int yelY = ((y*32)+64)-15;    </span>
+<span class="pc bpc" id="L138" title="1 of 2 branches missed.">            if (grid[y+index][x].getY() == yelY ){</span>
+<span class="fc" id="L139">                Enemy enemy = (Enemy)grid[y+index][x];</span>
+<span class="fc" id="L140">                grid[y+index][x]=grid[y][x];</span>
+<span class="fc" id="L141">                grid[y][x] = enemy;</span>
+            }                                                     
+        }
+<span class="fc" id="L144">    }</span>
+    /**
+     * Redirect object moves .
+     * @param x  x-coordinate of an object
+     * @param y  y-coordinate of an object
+     * @param grid  map of 2d array
+     */
+    public void tick(int y , int x, Block[][] grid){
+<span class="fc" id="L152">        this.frameCount++;</span>
+<span class="fc" id="L153">        this.count++;</span>
+<span class="fc bfc" id="L154" title="All 2 branches covered.">        if(this.count%60==0){</span>
+<span class="fc bfc" id="L155" title="All 2 branches covered.">            if(this.isXAxis){</span>
+<span class="fc" id="L156">                tickXAxis(x,y,this.move,this.index,grid);</span>
+            }
+<span class="fc bfc" id="L158" title="All 2 branches covered.">            else if (this.isYAxis){</span>
+<span class="fc" id="L159">                tickYAxis(x,y,this.move,this.index,grid);</span>
+            }
+        }
+<span class="fc" id="L162">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="demolition.RedEnemyTest" tests="15" skipped="0" failures="0" errors="0" timestamp="2021-11-05T11:11:17" hostname="DESKTOP-4MELK5E" time="1.302">
+  <properties/>
+  <testcase name="moveSolidXTest()" classname="demolition.RedEnemyTest" time="0.062"/>
+  <testcase name="moveSolidYTest()" classname="demolition.RedEnemyTest" time="0.073"/>
+  <testcase name="moveSolidYUpTest()" classname="demolition.RedEnemyTest" time="0.097"/>
+  <testcase name="moveXaxisTest()" classname="demolition.RedEnemyTest" time="0.079"/>
+  <testcase name="moveLeftXTest()" classname="demolition.RedEnemyTest" time="0.071"/>
+  <testcase name="moveUpYTest()" classname="demolition.RedEnemyTest" time="0.075"/>
+  <testcase name="testXRandomAxis()" classname="demolition.RedEnemyTest" time="0.082"/>
+  <testcase name="moveRandomX()" classname="demolition.RedEnemyTest" time="0.087"/>
+  <testcase name="moveRandomY()" classname="demolition.RedEnemyTest" time="0.062"/>
+  <testcase name="moveYaxisTest()" classname="demolition.RedEnemyTest" time="0.057"/>
+  <testcase name="moveBombGuyXTest()" classname="demolition.RedEnemyTest" time="0.098"/>
+  <testcase name="yellowEnemyXTest()" classname="demolition.RedEnemyTest" time="0.091"/>
+  <testcase name="yellowEnemyYTest()" classname="demolition.RedEnemyTest" time="0.152"/>
+  <testcase name="moveLeftSolidXTest()" classname="demolition.RedEnemyTest" time="0.098"/>
+  <testcase name="testXSolidAxis()" classname="demolition.RedEnemyTest" time="0.102"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[The file "src/main/resources/player/playerl.png" is missing or inaccessible, make sure the URL is valid or that the file has been added to your sketch and is readable.
+The file "src/main/resources/yellow_enemy/yello_downl.png" is missing or inaccessible, make sure the URL is valid or that the file has been added to your sketch and is readable.
+The file "src/main/resources/wall/.png" is missing or inaccessible, make sure the URL is valid or that the file has been added to your sketch and is readable.
+]]></system-err>
+</testsuite>

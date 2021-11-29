@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Map.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">final_demolition</a> &gt; <a href="index.source.html" class="el_package">demolition</a> &gt; <span class="el_source">Map.java</span></div><h1>Map.java</h1><pre class="source lang-java linenums">package demolition;
+
+import processing.core.PImage;
+import processing.core.PApplet;
+import processing.core.PFont;
+import java.util.ArrayList;
+
+
+public class Map {
+   /*To reset game configuration */
+    public static boolean reset ;
+    /*Default map row*/
+    public static final int ROW = 13;
+    /**Default map column */
+    public static final int COL =15;
+    /**To store game objects in a 2d array */
+<span class="fc" id="L17">    private Block [][] grid = new Block[ROW][COL];</span>
+    /**Instantiate setting objects or file configuration */
+<span class="fc" id="L19">    private Setting set = new Setting();</span>
+    /**Store background object , such as empty tiles */
+<span class="fc" id="L21">    private ArrayList&lt;Block&gt; background = new ArrayList&lt;&gt;();  </span>
+    /**Eecord number or total levels availlable */
+<span class="fc" id="L23">    private int numLevel=0;</span>
+   /**total lives in a game */
+<span class="fc" id="L25">    public int live = 0;   </span>
+    /**total time in a game */ 
+<span class="fc" id="L27">    public int time = 0;</span>
+
+   /**Default constructor */
+<span class="fc" id="L30">    public Map (){</span>
+<span class="fc" id="L31">       this.reset = false;</span>
+<span class="fc" id="L32">    }</span>
+    /**
+     * Get total levels in a game
+     * @return total number of level in a map/game
+     */
+    public int totalLvl(){
+<span class="fc" id="L38">       return this.numLevel;</span>
+    }
+    /**
+     * Return grids object of the map in a 2d array
+     * @return grid of map
+     */
+    public Block[][] getBlock(){
+<span class="fc" id="L45">        return this.grid;</span>
+    }
+    /**
+     * Get background object in an array list
+     * such as: bomb , empty tiles, time and live
+     * @return map background
+     */
+    public ArrayList&lt;Block&gt; getBg(){
+<span class="fc" id="L53">        return this.background;</span>
+    }
+    /**
+     * Load the image of the game from json files to 2d array 
+     * @param app  processing image to draw and process images
+     * @param lvl  lvl to set the game at
+     * @param configFile the configuration file to read at
+     */
+    public void setGame(PApplet app, int lvl,String configFile){
+        
+<span class="fc" id="L63">        set.readJSON(app,configFile);</span>
+<span class="fc" id="L64">        this.numLevel = set.numLevel();</span>
+<span class="fc" id="L65">        this.live = set.getLives();</span>
+<span class="fc" id="L66">        this.time = set.getTime(lvl);</span>
+<span class="fc" id="L67">        String filename = set.getPath(lvl);</span>
+<span class="fc" id="L68">        ArrayList&lt;String[]&gt; graph = set.getGrid(filename);</span>
+
+<span class="fc bfc" id="L70" title="All 2 branches covered.">        for (int i =0 ; i &lt; graph.size(); i++){</span>
+<span class="fc bfc" id="L71" title="All 2 branches covered.">           for(int j =0 ;j &lt; graph.get(i).length;j++){</span>
+<span class="fc bfc" id="L72" title="All 2 branches covered.">                if ( graph.get(i)[j].equals(&quot;P&quot;)){ </span>
+<span class="fc" id="L73">                   this.background.add(new Empty(j*32,i*32,app.loadImage(&quot;src/main/resources/empty/empty.png&quot;)));</span>
+<span class="fc" id="L74">                   this.grid[i][j] = new BombGuy(j*32,i*32,app.loadImage(&quot;src/main/resources/player/player1.png&quot;));           </span>
+<span class="fc bfc" id="L75" title="All 2 branches covered.">                } else if ( graph.get(i)[j].equals(&quot;Y&quot;)){ </span>
+<span class="fc" id="L76">                   this.background.add(new Empty(j*32,i*32,app.loadImage(&quot;src/main/resources/empty/empty.png&quot;)));</span>
+<span class="fc" id="L77">                   this.grid[i][j] = new YellowEnemy(j*32,i*32,app.loadImage(&quot;src/main/resources/red_enemy/red_down1.png&quot;));           </span>
+<span class="fc bfc" id="L78" title="All 2 branches covered.">                }else if ( graph.get(i)[j].equals(&quot;R&quot;)){ </span>
+<span class="fc" id="L79">                   this.background.add(new Empty(j*32,i*32,app.loadImage(&quot;src/main/resources/empty/empty.png&quot;)));</span>
+<span class="fc" id="L80">                   this.grid[i][j] = new RedEnemy(j*32,i*32,app.loadImage(&quot;src/main/resources/yellow_enemy/yellow_down1.png&quot;));           </span>
+<span class="fc bfc" id="L81" title="All 2 branches covered.">                } else if ( graph.get(i)[j].equals(&quot;W&quot;)){</span>
+<span class="fc" id="L82">                   this.grid[i][j] = new Solid(j*32,i*32,app.loadImage(&quot;src/main/resources/wall/solid.png&quot;));</span>
+<span class="fc bfc" id="L83" title="All 2 branches covered.">                } else if ( graph.get(i)[j].equals(&quot; &quot;)){</span>
+<span class="fc" id="L84">                   this.background.add(new Empty(j*32,i*32,app.loadImage(&quot;src/main/resources/empty/empty.png&quot;)));</span>
+<span class="fc bfc" id="L85" title="All 2 branches covered.">                } else if ( graph.get(i)[j].equals(&quot;B&quot;)){</span>
+<span class="fc" id="L86">                   this.grid[i][j] = new Broken(j*32,i*32,app.loadImage(&quot;src/main/resources/broken/broken.png&quot;));</span>
+<span class="pc bpc" id="L87" title="1 of 2 branches missed.">                } else if ( graph.get(i)[j].equals(&quot;G&quot;)){</span>
+<span class="fc" id="L88">                   this.grid[i][j] = new Goal(j*32,i*32,app.loadImage(&quot;src/main/resources/goal/goal.png&quot;));</span>
+                }else {
+<span class="nc" id="L90">                   this.background.add(new Empty(j*32,i*32,app.loadImage(&quot;src/main/resources/empty/empty.png&quot;)));</span>
+                }
+           }
+
+<span class="fc" id="L94">           PFont font = app.createFont(&quot;src/main/resources/PressStart2P-Regular.ttf&quot;,25);</span>
+<span class="fc" id="L95">           app.textFont(font);</span>
+<span class="fc" id="L96">           this.background.add(new Icon(128, 20 , app.loadImage(&quot;src/main/resources/icons/player.png&quot;)));</span>
+<span class="fc" id="L97">           this.background.add(new Icon(256, 20, app.loadImage(&quot;src/main/resources/icons/clock.png&quot;)));</span>
+        }
+        
+<span class="fc" id="L100">    }   </span>
+
+
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>
